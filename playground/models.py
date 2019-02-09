@@ -26,6 +26,7 @@ class Segment(models.Model):
     start = models.FloatField(default=0.0)
     stop = models.FloatField(default=0.0)
     label = models.ForeignKey(Label, on_delete=models.CASCADE, related_name='segments')
+    video = models.ForeignKey(Video, on_delete=models.CASCADE, related_name='segments', null=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 

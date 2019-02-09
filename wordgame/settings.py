@@ -123,3 +123,6 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     '{}/static'.format(BASE_DIR),
 ]
+
+LOGIN_REDICRECT_URL = '/play/'
+LOGOUT_REDICRECT_URL = '/accounts/login/'

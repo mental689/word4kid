@@ -3,17 +3,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>Word4Kid</title>
     <style>
         body {
-            font-family: sans-serif;
+            {#font-family: arial;#}
             font-size: 11pt;
         }
 
         .draggable {
-            width: 250px;
-            height: 20px;
-            background-color: #e6eaff;
+        {#width: 250px;#} background-color: #e6eaff;
             border: 2px solid #3399cc;
             margin-bottom: 1em;
             padding: 4px;
@@ -26,7 +25,10 @@
 
         #droppable {
             font-size: 14pt;
-            width: 400px;
+            width: 100%;
+            height: 50px;
+            border-color: #777620;
+            border: 2px solid;
         }
 
         #droppableHolder {
@@ -36,18 +38,50 @@
 
     </style>
     <link rel="stylesheet" href="{% static 'css/jquery-ui.css' %}">
+    <link href="https://vjs.zencdn.net/7.4.1/video-js.css" rel="stylesheet">
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"
+          integrity="sha384-PmY9l28YgO4JwMKbTvgaS7XNZJ30MK9FAZjjzXtlqyZCqBY6X6bXIkM++IkyinN+" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap-theme.min.css"
+          integrity="sha384-jzngWsPS6op3fgRCDTESqrEJwRKck+CILhJVO5VvaAZCq8JYf8HsR/HPpBOOPZfR" crossorigin="anonymous">
 </head>
 <body>
 {% block main %}
-    <div class="main">
-        <div class="draggable">here are some draggables</div>
-        <div class="draggable">you can drop any of these</div>
-        <div class="draggable">in the text box and the</div>
-        <div class="draggable">text will be set to its contents!</div>
-        <div id="droppableHolder">
-            Drop in this text box:<br/>
-            <br/>
-            <input type="text" id="droppable"/>
+    <div class="container">
+    <h3 class="row">Word4Kid: Learning English by completing sentences</h3>
+        <div class="row">
+            <center>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <video id='my-video' class='video-js' controls preload='auto' width='640' height='264'
+                           poster='' data-setup='{}'>
+                        <source src='{{ video.url }}'
+                                type='video/mp4'>
+                        <p class='vjs-no-js'>
+                            To view this video please enable JavaScript, and consider upgrading to a web browser that
+                            <a href='https://videojs.com/html5-video-support/' target='_blank'>supports HTML5 video</a>
+                        </p>
+                    </video>
+                </div>
+            </center>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div id="droppableHolder">
+                    Look into the words at the bottom and drop into the sentence:<br/>
+                    <br/>
+                    <input type="text" id="droppable"/>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                {% for w in words %}
+                    <div class="draggable"><a href="https://kids.wordsmyth.net/we/?ent={{ w }}" target="_blank">{{ w }}</a></div>
+                {% endfor %}
+            </div>
         </div>
     </div>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -68,11 +102,17 @@
             $("#droppable").droppable({
                 hoverClass: 'active',
                 drop: function (event, ui) {
-                    this.value = $(ui.draggable).text();
+                    this.value += ' ' + $(ui.draggable).text();
                 }
             });
         });
     </script>
+    <script src='https://vjs.zencdn.net/7.4.1/video.js'></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"
+            integrity="sha384-vhJnz1OVIdLktyixHY4Uk3OHEwdQqPppqYR8+5mjsauETgLOcEynD9oPHhhz18Nw"
+            crossorigin="anonymous"></script>
 {% endblock %}
 </body>
 </html>

@@ -12,6 +12,12 @@ class PlayView(LoginRequiredMixin, View):
     template_name = 'game.html'
 
     def get(self, request, *args, **kwargs):
-        return render(request, template_name=self.template_name, context={})
+        id = request.GET.get('id', None)
+        v = Video.objects.filter(pk=id).first()
+        context = {}
+        if v is not None:
+            context['video'] = v
+            context['words'] = list(set([s.label.text for s in v.segments.all()]))
+        return render(request, template_name=self.template_name, context=context)
 
 
